@@ -1,0 +1,5 @@
+/.vs
+/Engine/bin
+/Engine/obj
+/Tests/obj
+/Tests/bin
