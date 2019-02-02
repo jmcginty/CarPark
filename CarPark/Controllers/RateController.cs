@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Engine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarPark.Controllers
@@ -13,9 +10,9 @@ namespace CarPark.Controllers
     {
         // GET: api/Rate
         [HttpGet]
-        public IEnumerable<string> Get(DateTime startDate, DateTime endDate)
+        public BaseRate Get(DateTime startDate, DateTime endDate)
         {
-            return new string[] { "value1", "value2" };
+            return Calculator.Calculate(startDate, endDate);
         }
 
         // GET: api/Rate/5
