@@ -6,14 +6,16 @@ export class DateSelector extends Component {
 
   constructor(props) {
     super(props);
-      this.state = { startDate: new Date(), endDate: new Date(), totalPrice: null, rate: '', rateType: '', error: '' };
+      this.state = { startDate: null, endDate: null, totalPrice: null, rate: '', rateType: '', error: '' };
       this.startChanged = this.startChanged.bind(this);
       this.endChanged = this.endChanged.bind(this);
       this.getRate = this.getRate.bind(this);
   }
 
     getRate(startDate, endDate) {
-        // todo template 
+        if (startDate === null || endDate === null) {
+            return;
+        }
         var path = window.location.protocol + '//' + window.location.host + '/api/Rate?startDate=' + startDate.toJSON() + '&endDate=' + endDate.toJSON();
         fetch(path)
             .then(res => res.json())
@@ -80,8 +82,9 @@ export class DateSelector extends Component {
                         Entry Time
                     </div>
                     <div className="col-sm-9">
-                        <Datetime dateFormat="DD/MM/YYYY"
+                        <Datetime dateFormat="ddd DD/MM/YYYY"
                             onChange={this.startChanged}
+                            
                             closeOnSelect
                         />
                     </div>
@@ -92,7 +95,7 @@ export class DateSelector extends Component {
                             Exit Time
                         </div>
                         <div className="col-sm-9">
-                            <Datetime dateFormat="DD/MM/YYYY"
+                            <Datetime dateFormat="ddd DD/MM/YYYY"
                                 onChange={this.endChanged}
                                 closeOnSelect
                             />
