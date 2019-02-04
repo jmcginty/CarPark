@@ -6,13 +6,15 @@ namespace Tests
 {
     public class WeekendRateTests
     {
+        private Calculator calculator = new Calculator();
+
         [Fact]
         public void EnterAfterMidnightFridayAndExitBeforeMidnightSundayIsWeekendRate()
         {
             var startTime = new DateTime(2019, 02, 02, 0, 0, 0);
             var endTime = new DateTime(2019, 02, 03, 23, 59, 59);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.Equal(Calculator.WeekendRate, rate.TotalPrice);
             Assert.IsType<WeekendRate>(rate);
             Assert.Equal("Weekend", rate.Name);
@@ -25,7 +27,7 @@ namespace Tests
             var startTime = new DateTime(2019, 02, 02, 0, 0, 0);
             var endTime = new DateTime(2019, 02, 10, 23, 59, 59);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<WeekendRate>(rate);
         }
 
@@ -35,7 +37,7 @@ namespace Tests
             var startTime = new DateTime(2019, 02, 01, 23, 59, 59);
             var endTime = new DateTime(2019, 02, 03, 23, 59, 59);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<WeekendRate>(rate);
         }
 
@@ -45,7 +47,7 @@ namespace Tests
             var startTime = new DateTime(2019, 02, 01, 0, 0, 0);
             var endTime = new DateTime(2019, 02, 03, 0, 0, 1);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<WeekendRate>(rate);
         }
     }

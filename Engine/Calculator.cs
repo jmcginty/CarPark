@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Engine
 {
-    public class Calculator
+    public class Calculator: ICalculator
     {
         public const decimal HourlyRate = 5;
         public const decimal EarlyBirdRate = 13;
@@ -12,7 +12,7 @@ namespace Engine
         public const decimal WeekendRate = 10;
         public const decimal DayRate = HourlyRate * 4;
 
-        public static BaseRate Calculate(DateTime startDate, DateTime endDate)
+        public BaseRate Calculate(DateTime startDate, DateTime endDate)
         {
             if (endDate <= startDate)
             {

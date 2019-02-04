@@ -6,13 +6,15 @@ namespace Tests
 {
     public class EarlyBirdTests
     {
+        private Calculator calculator = new Calculator();
+
         [Fact]
         public void EnterBetween6amAnd9amExitBetween3pmAnd1130pmIsEarlyBirdRate()
         {
             var startTime = new DateTime(2019, 01, 01, 6, 0, 0);
             var endTime = new DateTime(2019, 01, 01, 23, 30, 0);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.Equal(Calculator.EarlyBirdRate, rate.TotalPrice);
             Assert.IsType<EarlyBirdRate>(rate);
             Assert.Equal("Early Bird", rate.Name);
@@ -24,7 +26,7 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 6, 0, 0);
             var endTime = new DateTime(2019, 01, 02, 23, 30, 0);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<EarlyBirdRate>(rate);
         }
 
@@ -34,7 +36,7 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 5, 59, 59);
             var endTime = new DateTime(2019, 01, 01, 23, 30, 0);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<EarlyBirdRate>(rate);
         }
 
@@ -44,7 +46,7 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 9, 0, 1);
             var endTime = new DateTime(2019, 01, 01, 23, 30, 0);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<EarlyBirdRate>(rate);
         }
 
@@ -55,7 +57,7 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 6, 0, 0);
             var endTime = new DateTime(2019, 01, 01, 15, 29, 59);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<EarlyBirdRate>(rate);
         }
 
@@ -65,7 +67,7 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 6, 0, 0);
             var endTime = new DateTime(2019, 01, 01, 23, 30, 1);
 
-            var rate = Calculator.Calculate(startTime, endTime);
+            var rate = calculator.Calculate(startTime, endTime);
             Assert.IsNotType<EarlyBirdRate>(rate);
         }
     }

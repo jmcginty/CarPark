@@ -27,6 +27,8 @@ namespace CarPark
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<Engine.ICalculator, Engine.Calculator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
