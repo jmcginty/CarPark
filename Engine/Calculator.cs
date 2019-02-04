@@ -6,21 +6,33 @@ namespace Engine
 {
     public class Calculator
     {
-        public static decimal HourlyRate => 5;
-        public static decimal EarlyBirdRate => 13;
-        public static decimal NightRate => 6.50m;
-        public static decimal WeekendRate => 10;
-        public static decimal DayRate => HourlyRate * 4;
+        public const decimal HourlyRate = 5;
+        public const decimal EarlyBirdRate = 13;
+        public const decimal NightRate = 6.50m;
+        public const decimal WeekendRate = 10;
+        public const decimal DayRate = HourlyRate * 4;
 
         public static BaseRate Calculate(DateTime startDate, DateTime endDate)
         {
             if (endDate <= startDate)
             {
-                throw new Exception("Start date must be earlier than end date");
+                return new StandardRate()
+                {
+                    Error = "Start date must be earlier than end date"
+                };
             }
 
             TimeSpan time = endDate - startDate;
             TimeSpan days = endDate.Date - startDate.Date;
+
+            // Standard Rate for one hour or less
+            if (time.TotalHours <= 1)
+            {
+                return new StandardRate()
+                {
+                    TotalPrice = HourlyRate,
+                };
+            }
 
             // Early Bird Rate
             if (days.Days == 0)
@@ -65,7 +77,7 @@ namespace Engine
                 };
             }
 
-            // Weekend Rate
+            // Weekday Night Rate
             if (startDate.TimeOfDay.TotalHours >= 18
                 && endDate.TimeOfDay.TotalHours < 6
                 && startDate.DayOfWeek != DayOfWeek.Saturday

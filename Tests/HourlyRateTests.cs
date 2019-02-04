@@ -77,5 +77,17 @@ namespace Tests
             Assert.Equal(RateType.Hourly, rate.Type);
             Assert.Equal("Standard", rate.Name);
         }
+
+        [Fact]
+        public void HourlyRatePreferredOverWeekendRateFor1HourOrLess()
+        {
+            var startTime = new DateTime(2019, 02, 03, 17, 0, 0);
+            var endTime = startTime.AddHours(1);
+
+            var rate = Calculator.Calculate(startTime, endTime);
+            Assert.Equal(Calculator.HourlyRate, rate.TotalPrice);
+            Assert.Equal(RateType.Hourly, rate.Type);
+            Assert.Equal("Standard", rate.Name);
+        }
     }
 }

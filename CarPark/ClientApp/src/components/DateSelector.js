@@ -6,7 +6,7 @@ export class DateSelector extends Component {
 
   constructor(props) {
     super(props);
-      this.state = { startDate: new Date(), endDate: new Date(), totalPrice: null, rate: '', rateType: '' };
+      this.state = { startDate: new Date(), endDate: new Date(), totalPrice: null, rate: '', rateType: '', error: '' };
       this.startChanged = this.startChanged.bind(this);
       this.endChanged = this.endChanged.bind(this);
       this.getRate = this.getRate.bind(this);
@@ -23,16 +23,8 @@ export class DateSelector extends Component {
                         ...this.state, 
                         totalPrice: result.totalPrice,
                         rate: result.name,
-                        rateType: result.type
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
+                        rateType: result.type,
+                        error: result.error
                     });
                 }
             );
@@ -57,21 +49,18 @@ export class DateSelector extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <div>
-                    Entry Time
-                    <Datetime dateFormat="DD/MM/YYYY"
-                        onChange={this.startChanged}
-                    />
-                </div>
-                <div>
-                    Exit Time
-                    <Datetime dateFormat="DD/MM/YYYY"
-                        onChange={this.endChanged}
-                    />
-                </div>
+        let errorText = null;
+        let resultText = null;
 
+        if (this.state.error !== null) {
+            errorText =
+                <div>
+                    {this.state.error}
+                </div>;
+        }
+        else {
+            resultText =
+            <div>
                 <div>
                     Rate {this.state.rate}
                 </div>
@@ -81,6 +70,40 @@ export class DateSelector extends Component {
                 <div>
                     Total Amount ${this.state.totalPrice}
                 </div>
+            </div>;
+        }
+
+        return (
+            <div>
+                <div className="row">
+                    <div className="col-sm-3">
+                        Entry Time
+                    </div>
+                    <div className="col-sm-9">
+                        <Datetime dateFormat="DD/MM/YYYY"
+                            onChange={this.startChanged}
+                            closeOnSelect
+                        />
+                    </div>
+                    <br />
+                    <br />
+                    <div >
+                        <div className="col-sm-3">
+                            Exit Time
+                        </div>
+                        <div className="col-sm-9">
+                            <Datetime dateFormat="DD/MM/YYYY"
+                                onChange={this.endChanged}
+                                closeOnSelect
+                            />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                {errorText}
+                <br />
+                <br />
+                {resultText}
             </div>
         );
     }

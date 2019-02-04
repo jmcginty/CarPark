@@ -9,5 +9,6 @@ namespace Engine
         [JsonConverter(typeof(StringEnumConverter))]
         public abstract RateType Type { get; }
         public decimal TotalPrice { get; set; }
+        public string Error { get; set; }
     }
 }

@@ -12,7 +12,8 @@ namespace Tests
             var startTime = new DateTime(2019, 01, 01, 4, 0, 0);
             var endTime = startTime;
 
-            Assert.Throws<Exception>(() => Calculator.Calculate(startTime, endTime));
+            var rate = Calculator.Calculate(startTime, endTime);
+            Assert.Equal("Start date must be earlier than end date", rate.Error);
         }
     }
 }
